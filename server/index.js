@@ -5,13 +5,15 @@ const cors = require('cors'); // нужен чтобы мы могли отпр�
 const sequelize = require('./db');
 const models = require('./models/models');
 const router = require('./routes/index');
+const errorHandler = require('./middleware/ErrorHandlingMiddleware');
  
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // нужен для того чтобы наше приложение мог парсить json формат
+app.use(express.json());    // нужен для того чтобы наше приложение мог парсить json формат
 app.use('/api', router);
+app.use(errorHandler);     // обработка ошибок, последний Middleware, должен регис-ться в самом конце
 
 const start = async () => {
     try {
