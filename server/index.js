@@ -1,10 +1,19 @@
 require('dotenv').config(); // при любом изменений в коде сервер перезапускается
 const express = require('express'); // подключаем фреймворк для бэкенда
+const cors = require('cors'); // нужен чтобы мы могли отпралять запросы с браузера
+
 const sequelize = require('./db');
+const models = require('./models/models');
  
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+app.use(cors());
+app.use(express.json()); // нужен для того чтобы наше приложение мог парсить json формат
+
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'WORKING...'});
+});
 
 const start = async () => {
     try {
